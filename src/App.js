@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import './App.css';
 import task from './ejemplos/datos.json';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
 
 
 //import componentes
@@ -50,22 +50,19 @@ class App extends Component {
     render(){
         return(
             <div>
-                <Router>
-                    <Route path="/" render={()=>{
-                        return <div>
-                                    <TaskForm addTask={this.addTask}/>
-                                    <Tasks  
-                                        task={this.state.tareas} 
-                                        deleteTask={this.deleteTask} 
-                                        checkDone={this.checkDone} />
-                                </div> 
-                    }} />
-                </Router>
-                
-            </div>
+                <TaskForm addTask={this.addTask}/>
+                <Tasks  
+                    task={this.state.tareas} 
+                    deleteTask={this.deleteTask} 
+                    checkDone={this.checkDone} 
+                />
+                <Posts/>  
+             </div> 
+            
         )
     }
 }
 
-//<Route path='/posts' component={Posts} />
+
+
 export default App;
