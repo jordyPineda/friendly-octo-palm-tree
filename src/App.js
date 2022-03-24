@@ -2,11 +2,13 @@
 import React, {Component} from 'react';
 import './App.css';
 import task from './ejemplos/datos.json';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
+
 
 //import componentes
 import Tasks from './componentes/Tasks';
 import TaskForm from './componentes/TaskForm';
-
+import Posts from './componentes/Posts'
 
 class App extends Component {
 
@@ -26,15 +28,44 @@ class App extends Component {
         })
 
     }
+
+    deleteTask = (id) =>{
+        const newTask= this.state.tareas.filter(task => task.id !== id);
+        console.log(newTask);
+        this.setState({
+            tareas:newTask
+        })
+    }
+
+    checkDone = (id) =>{
+        const newtask = this.state.tareas.map(task => {
+                                                    if(task.id === id){
+                                                        task.done= !task.done;
+                                                    }
+                                                    return task;
+                                                })
+        this.setState({tareas:newtask})
+
+    }
     render(){
         return(
             <div>
-                <TaskForm addTask={this.addTask}/>
-                <Tasks  task={this.state.tareas}/>
+                <Router>
+                    <Route path="/" render={()=>{
+                        return <div>
+                                    <TaskForm addTask={this.addTask}/>
+                                    <Tasks  
+                                        task={this.state.tareas} 
+                                        deleteTask={this.deleteTask} 
+                                        checkDone={this.checkDone} />
+                                </div> 
+                    }} />
+                </Router>
+                
             </div>
         )
     }
 }
 
-
+//<Route path='/posts' component={Posts} />
 export default App;
